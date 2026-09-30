@@ -1,16 +1,14 @@
-import {View, Text, Button} from 'react-native'
-import { styles } from './styles'
-import { router } from 'expo-router'
+import Botao from "@/components/Botao";
+import { router } from "expo-router";
+import { Text, View } from "react-native";
+import { styles } from '@/styles/global';
+export default function Configuracoes() {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.descricao}>Tela de Configurações</Text>
+      <Botao texto="Voltar" onPress={router.back} />
 
-export default function Configuracoes(){
-
-    return(
-        <View style={styles.container}>
-            <Text style={styles.titulo}>Tela de Configurações</Text>
-            <Button
-                title='Voltar'
-                onPress={router.back}
-            />
-        </View>
-    )
+      <Botao texto="Tarefas" onPress={() => router.push("/tarefas/tarefas")} />
+    </View>
+  );
 }

@@ -1,4 +1,5 @@
 import {Stack} from 'expo-router'
+import { StackScreen } from 'react-native-screens'
 
 export default function LAyout(){
 
@@ -10,8 +11,14 @@ export default function LAyout(){
             />
 
              <Stack.Screen
-            name="tarefas"
+            name="tarefas/tarefas"
             options={{title: "Minhas Tarefas"}}
+            />
+        
+
+            <Stack.Screen
+            name="tarefas/addTarefas"
+            options={{title: "Adicionar Tarefas"}}
             />
         </Stack>
     )

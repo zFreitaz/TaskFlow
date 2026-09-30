@@ -28,7 +28,7 @@ export const styles = StyleSheet.create({
         width: 140,
         height: 140,
         marginBottom: 20
-    },
+    }, 
     card:{
         backgroundColor: '#ffffff',
         padding: 30,
@@ -41,15 +41,5 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 40,
         borderRadius: 10
     },
-    textoBotao:{
-        color: '#fff',
-        fontWeight: 'bold',
-        fontSize: 18
-    },
-    botaoPressionado:{
-        opacity: 0.7,
-        backgroundColor: '#ff00b3ff',
-        transform: [{scale: 1.5}]
-    }
-});
 
+});
