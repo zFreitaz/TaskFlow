@@ -3,6 +3,7 @@ import { carregarTarefas, salvarTarefas } from "@/utils/armazenamento";
 import { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
 import { router } from "expo-router";
+import { Picker } from "@react-native-picker/picker";
 
 export default function AddTarefas() {
     const [titulo, setTitulo] = useState("")
@@ -11,23 +12,23 @@ export default function AddTarefas() {
 
     async function salvar (){
         if (titulo.trim() === ""){
-            Alert.alert("Atenção")
+            Alert.alert("Atenção", "Digite o Título da Tarefa!")
             return;
         }
         if (descricao.trim() === ""){
             Alert.alert("Atenção", "Digite a Descrição da Tarefa!")
-                return;
+            return;
         }
         if (prioridade.trim() === ""){
-            Alert.alert("Atenção", "Digite a Prioridade da Tarefa!")
-                return;
+            Alert.alert("Atenção", "Selecione a Prioridade da Tarefa!")
+            return;
         }
         
         const novaTarefa = {
             id: Date.now().toString(),
             titulo: titulo.trim(),
             descricao: descricao.trim(),
-            prioridade: "Alta"
+            prioridade: prioridade
         }
 
         const tarefas = await carregarTarefas();
@@ -36,8 +37,12 @@ export default function AddTarefas() {
 
         await salvarTarefas(novaLista)
 
-        Alert.alert("Sucesso!", "Validação Ok, dados salvos com sucesso!");
-        router.replace("/tarefas/tarefas");
+        Alert.alert("Sucesso!", "Validação Ok, dados salvos com sucesso!", [
+            {
+                text: "OK",
+                onPress: () => router.replace("/tarefas/tarefas")
+            }
+        ]);
     }
 
     return (
@@ -59,16 +64,21 @@ export default function AddTarefas() {
             />
 
             <Text style={styles.label}>Prioridade *</Text>
-            <TextInput
-                value={prioridade}
-                style={styles.campo}
-                onChangeText={(texto) => { setPrioridade(texto) }}
-                placeholder="Digite a prioridade da tarefa"
-                multiline
-            />
+            
+            <View style={styles.selectItem}>
+                <Picker
+                    selectedValue={prioridade}
+                    onValueChange={(texto) => setPrioridade(texto)}
+                >
+                    <Picker.Item label="Selecione..." value="" />
+                    <Picker.Item label="Baixa" value="Baixa" />
+                    <Picker.Item label="Média" value="Média" />
+                    <Picker.Item label="Alta" value="Alta" />
+                </Picker>
+            </View>
 
             <View style={{alignSelf: "flex-end"}}>
-                <Botao texto="Salvar" onPress={()=> salvar()}/>
+                <Botao texto="Salvar" onPress={() => salvar()}/>
             </View>
           </View>
     );
@@ -80,6 +90,12 @@ const styles = StyleSheet.create({
         borderColor: '#999',
         borderRadius: 8,
         padding: 12,
+        marginBottom: 15
+    },
+    selectItem:{
+        borderWidth: 1,
+        borderColor: '#999',
+        borderRadius: 8,
         marginBottom: 15
     },
     label: {
